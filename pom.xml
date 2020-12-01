@@ -13,14 +13,6 @@
         <java.version>1.8</java.version>
     </properties>
 
-    <modules>
-        <module>noah-demo</module>
-        <module>noah-yinruan</module>
-        <module>noah-test</module>
-        <module>noah-core</module>
-    </modules>
-
-
     <dependencies>
     </dependencies>
 
