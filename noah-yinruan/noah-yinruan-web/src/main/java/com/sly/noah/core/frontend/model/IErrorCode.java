@@ -1,4 +1,4 @@
-package com.sly.noah.model;
+package com.sly.noah.core.frontend.model;
 
 /**
  * @Created by wj on 2020/12/15

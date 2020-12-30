@@ -2,7 +2,7 @@ package com.sly.noah.core.modules.sys.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sly.noah.core.frontend.model.layuimini.LayuiMiniConfig;
-import com.sly.noah.model.Result;
+import com.sly.noah.core.frontend.model.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;

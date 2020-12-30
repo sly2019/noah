@@ -1,4 +1,4 @@
-package com.sly.noah.model;
+package com.sly.noah.core.frontend.model;
 
 /**
  * @Created by wj on 2020/12/15
@@ -16,12 +16,14 @@ public class Result<T> {
      */
     private String message;
 
+    private long count;
+
     /**
      * 数据封装
      */
     private T data;
 
-    protected Result() {
+    public Result() {
     }
 
     protected Result(long code, String message, T data) {
@@ -134,6 +136,14 @@ public class Result<T> {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public long getCount() {
+        return count;
+    }
+
+    public void setCount(long count) {
+        this.count = count;
     }
 
     public T getData() {

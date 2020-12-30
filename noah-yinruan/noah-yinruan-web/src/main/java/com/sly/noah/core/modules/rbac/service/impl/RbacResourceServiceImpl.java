@@ -6,6 +6,8 @@ import com.sly.noah.core.modules.rbac.service.RbacResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Created by wj on 2020/12/14
  * @Description TODO
@@ -24,5 +26,10 @@ public class RbacResourceServiceImpl implements RbacResourceService {
     @Override
     public RbacResource getById(Integer id) {
         return rbacResourceDao.getById(id);
+    }
+
+    @Override
+    public List<RbacResource> getAll() {
+        return rbacResourceDao.getAll();
     }
 }

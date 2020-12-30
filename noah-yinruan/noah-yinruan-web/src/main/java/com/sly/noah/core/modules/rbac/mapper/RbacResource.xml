@@ -22,4 +22,8 @@
         select * from rbac_resource where id = #{id}
     </select>
 
+    <select id="getAll" resultMap="BaseResultMap" parameterType="integer">
+        select * from rbac_resource
+    </select>
+
 </mapper>
