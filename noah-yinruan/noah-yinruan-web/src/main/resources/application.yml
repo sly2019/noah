@@ -4,7 +4,7 @@ server:
 spring:
 
   thymeleaf:
-    mode: LEGACYHTML5
+    mode: HTML # HTML LEGACYHTML5
     cache: false
 
   datasource:

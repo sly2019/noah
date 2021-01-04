@@ -20,4 +20,7 @@ public interface  RbacResourceDao {
 
     List<RbacResource> getAll();
 
+    int add(RbacResource rbacResource);
+
+
 }

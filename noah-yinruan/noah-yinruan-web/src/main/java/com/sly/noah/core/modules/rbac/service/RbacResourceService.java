@@ -1,6 +1,7 @@
 package com.sly.noah.core.modules.rbac.service;
 
 import com.sly.noah.core.modules.rbac.entity.RbacResource;
+import com.sly.noah.core.modules.rbac.vo.RbacResourceVo;
 
 import java.util.List;
 
@@ -28,6 +29,20 @@ public interface RbacResourceService {
      * @return
      */
     List<RbacResource> getAll();
+
+    /**
+     * 转换
+     * @param rbacResource
+     * @return
+     */
+    RbacResourceVo convertEntityToVo(RbacResource rbacResource);
+
+    /**
+     * 转换
+     * @param rbacResources
+     * @return
+     */
+    List<RbacResourceVo> convertEntityToVo(List<RbacResource> rbacResources);
 
 
 }

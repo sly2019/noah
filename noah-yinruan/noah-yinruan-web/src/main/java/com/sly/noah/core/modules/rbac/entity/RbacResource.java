@@ -39,7 +39,7 @@ public class RbacResource {
     /**
      * 排序号
      */
-    private String rank;
+    private Integer rank;
 
     /**
      * 说明
