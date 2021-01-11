@@ -1,6 +1,7 @@
 package com.sly.noah.core.modules.rbac.dao;
 
 import com.sly.noah.core.modules.rbac.entity.RbacResource;
+import com.sly.noah.core.modules.rbac.query_bean.RbacResourceQueryBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +21,11 @@ public interface  RbacResourceDao {
 
     List<RbacResource> getAll();
 
+    List<RbacResource> getAll(RbacResourceQueryBean queryBean);
+
     int add(RbacResource rbacResource);
+
+    int delete(Integer id);
 
 
 }

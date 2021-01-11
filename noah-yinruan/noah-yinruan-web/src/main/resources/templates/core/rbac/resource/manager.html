@@ -12,6 +12,11 @@
             line-height: 34px;
             padding: 0 8px;
         }
+        .layui-table-cell {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
     </style>
 </head>
 <body>
@@ -29,7 +34,8 @@
 </div>
 <!-- 操作列 -->
 <script type="text/html" id="auth-state">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-sm layui-btn-xs" lay-event="add">添加</a>
+    <a class="layui-btn layui-btn-sm layui-btn-xs" lay-event="edit">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
@@ -59,20 +65,21 @@
                 {field: 'name', minWidth: 200, title: '权限名称'},
                 {field: 'authority', title: '权限标识'},
                 {field: 'menuUrl', title: '菜单url'},
-                {field: 'orderNumber', width: 80,  title: '排序号'},
+                {field: 'orderNumber', width: 100,  title: '排序号'},
                 {
-                    field: 'isMenu', width: 80, align: 'center', templet: function (d) {
-                        if (d.isMenu == 1) {
-                            return '<span class="layui-badge layui-bg-gray">按钮</span>';
-                        }
-                        if (d.parentId == -1) {
-                            return '<span class="layui-badge layui-bg-blue">目录</span>';
-                        } else {
-                            return '<span class="layui-badge-rim">菜单</span>';
+                    field: 'isMenu', width: 100, align: 'center', title: '类型', templet: function (d) {
+                        if (d.type == 1) {
+                            return  "<span class='layui-badge layui-bg-orange'>模块</span>";
+                        } else  if (d.type == 2) {
+                            return  "<span class='layui-badge layui-bg-green'>目录</span>";
+                        } else  if (d.type == 3) {
+                            return  "<span class='layui-badge layui-bg-cyan'>菜单</span>";
+                        } else  if (d.type == 4) {
+                            return  "<span class='layui-badge layui-bg-blue'>按钮</span>";
                         }
                     },
                 },
-                {templet: '#auth-state', width: 120, align: 'center', title: '操作'}
+                {templet: '#auth-state', width: 200, align: 'center', title: '操作'}
             ]
             ],
             done: function () {
@@ -87,7 +94,7 @@
                 type : 2,
                 content : urlForAdd,
                 title : '添加',
-                area : [ '800px', '600px' ],
+                area : [ '800px', '520px' ],
                 maxmin : true
             });
         });
@@ -109,6 +116,17 @@
                 layer.msg('删除' + data.id);
             } else if (layEvent === 'edit') {
                 layer.msg('修改' + data.id);
+            } else if(layEvent === 'add') {
+                let urlForAdd = /*[[@{/rbacResource/toAdd}]]*/ '';
+                urlForAdd += "?pid=" + data.id;
+                layer.open({
+                    type: 2,
+                    content: urlForAdd,
+                    title: '添加',
+                    area: ['800px', '520px'],
+                    maxmin: true
+                });
+                return false;
             }
         });
     });

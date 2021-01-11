@@ -23,7 +23,7 @@
           "child": [
             {
               "title": "菜单管理",
-              "href": "/rbacResource/manager",
+              "href": "rbacResource/manager",
               "icon": "fa fa-tachometer",
               "target": "_self"
             },

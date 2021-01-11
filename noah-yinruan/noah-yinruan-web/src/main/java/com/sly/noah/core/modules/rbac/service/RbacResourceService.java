@@ -1,7 +1,8 @@
 package com.sly.noah.core.modules.rbac.service;
 
 import com.sly.noah.core.modules.rbac.entity.RbacResource;
-import com.sly.noah.core.modules.rbac.vo.RbacResourceVo;
+import com.sly.noah.core.modules.rbac.query_bean.RbacResourceQueryBean;
+import com.sly.noah.core.modules.rbac.vo.RbacResourceVO;
 
 import java.util.List;
 
@@ -11,38 +12,30 @@ import java.util.List;
  */
 public interface RbacResourceService {
 
-    /**
-     * 统计数量
-     * @return
-     */
     int count();
 
-    /**
-     * 通过id查找
-     * @param id
-     * @return
-     */
     RbacResource getById(Integer id);
 
-    /**
-     * 获取所有资源
-     * @return
-     */
+    int save(RbacResource rbacResource);
+
     List<RbacResource> getAll();
 
-    /**
-     * 转换
-     * @param rbacResource
-     * @return
-     */
-    RbacResourceVo convertEntityToVo(RbacResource rbacResource);
+    List<RbacResource> getAll(RbacResourceQueryBean queryBean);
+
+    RbacResourceVO convertEntityToVO(RbacResource rbacResource);
+
+    List<RbacResourceVO> convertEntityToVO(List<RbacResource> rbacResources);
+
+    RbacResource convertVOToEntity(RbacResourceVO rbacResourceVO);
+
+    void delete(Integer id);
 
     /**
-     * 转换
-     * @param rbacResources
-     * @return
+     * 删除本身及其所有子孙
+     *
+     * @param id
      */
-    List<RbacResourceVo> convertEntityToVo(List<RbacResource> rbacResources);
+    void deleteWithAllSubById(Integer id);
 
 
 }

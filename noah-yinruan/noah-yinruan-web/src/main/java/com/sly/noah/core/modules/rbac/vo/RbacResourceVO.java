@@ -9,7 +9,7 @@ import java.util.Date;
  * @Description TODO
  */
 @Data
-public class RbacResourceVo {
+public class RbacResourceVO {
 
     private Integer id;
 
@@ -20,6 +20,7 @@ public class RbacResourceVo {
     private String uri;
 
     private String type;
+    private String typeStr;
 
     private Integer rank;
 

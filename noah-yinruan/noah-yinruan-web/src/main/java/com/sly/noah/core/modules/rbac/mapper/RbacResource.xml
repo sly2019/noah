@@ -26,4 +26,25 @@
         select * from rbac_resource
     </select>
 
+    <select id="getAll" parameterType="com.sly.noah.core.modules.rbac.query_bean.RbacResourceQueryBean" resultMap="BaseResultMap">
+        select * from rbac_resource where 1 = 1
+        <if test="id != id">
+            and id=#{id}
+        </if>
+        <if test="pid != null">
+            and pid=#{pid}
+        </if>
+
+    </select>
+
+    <insert id="add" parameterType="com.sly.noah.core.modules.rbac.entity.RbacResource">
+        insert into rbac_resource( pid, name, uri, type, rank, description, create_time, last_update_time)
+         values
+        (#{pid}, #{name}, #{uri}, #{type}, #{rank}, #{description}, #{createTime}, #{lastUpdateTime})
+    </insert>
+
+    <delete id="delete" parameterType="integer">
+        delete from rbac_resource where id = #{id}
+    </delete>
+
 </mapper>
