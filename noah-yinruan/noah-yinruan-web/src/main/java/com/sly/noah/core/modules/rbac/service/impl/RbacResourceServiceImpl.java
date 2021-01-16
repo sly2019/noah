@@ -45,7 +45,7 @@ public class RbacResourceServiceImpl implements RbacResourceService {
 
     @Override
     public List<RbacResource> getAll(RbacResourceQueryBean queryBean) {
-        return rbacResourceDao.getAll(queryBean);
+        return rbacResourceDao.getByQueryBean(queryBean);
     }
 
     @Override

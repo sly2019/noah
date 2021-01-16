@@ -1,5 +1,6 @@
 package com.sly.noah.core.frontend.plugins;
 
+import com.sly.noah.core.frontend.model.BaseTree;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

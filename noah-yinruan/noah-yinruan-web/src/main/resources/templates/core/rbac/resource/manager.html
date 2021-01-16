@@ -65,7 +65,7 @@
                 {field: 'name', minWidth: 200, title: '权限名称'},
                 {field: 'authority', title: '权限标识'},
                 {field: 'menuUrl', title: '菜单url'},
-                {field: 'orderNumber', width: 100,  title: '排序号'},
+                {field: 'rank', width: 100,  title: '排序号'},
                 {
                     field: 'isMenu', width: 100, align: 'center', title: '类型', templet: function (d) {
                         if (d.type == 1) {
@@ -113,7 +113,23 @@
             var layEvent = obj.event;
 
             if (layEvent === 'del') {
-                layer.msg('删除' + data.id);
+                layer.confirm('确定删除该数据么？', {title: '删除', icon: 2}, function (index) {
+                    var loading = layer.load();
+                    $.post(/*[[@{/rbacResource/delete}]]*/ '', {
+                        id: obj.data.id
+                    }, function (result) {
+                        if (result.code == 200) {
+                            layer.close(loading);
+                            layer.close(index);
+                            layer.msg(result.msg, {icon: 1, time: 2000});
+                            //obj.del();
+                            window.location.href = /*[[@{/rbacResource/manager}]]*/ '';
+                        } else {
+                            layer.close(loading);
+                            layer.alert(result.msg, {title: "错误", icon: 2});
+                        }
+                    }, 'JSON');
+                });
             } else if (layEvent === 'edit') {
                 layer.msg('修改' + data.id);
             } else if(layEvent === 'add') {

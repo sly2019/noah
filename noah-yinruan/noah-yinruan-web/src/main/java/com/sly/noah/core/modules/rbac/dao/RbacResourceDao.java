@@ -21,7 +21,7 @@ public interface  RbacResourceDao {
 
     List<RbacResource> getAll();
 
-    List<RbacResource> getAll(RbacResourceQueryBean queryBean);
+    List<RbacResource> getByQueryBean(RbacResourceQueryBean queryBean);
 
     int add(RbacResource rbacResource);
 
