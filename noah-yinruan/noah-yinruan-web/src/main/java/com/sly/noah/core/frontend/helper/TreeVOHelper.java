@@ -59,12 +59,12 @@ public class TreeVOHelper<T extends BaseTree> {
 			String pid = treeVO.getPid();
 			T treeVOParent = idVsTreeVO.get(pid);
 			if (treeVOParent != null && !id.equals(pid)) {
-				List<T> children = treeVOParent.getChildren();
+				List<T> children = treeVOParent.getChild();
 				if (CollectionUtils.isEmpty(children)) {
 					children = new ArrayList<T>();
 				}
 				children.add(treeVO);
-				treeVOParent.setChildren(children);
+				treeVOParent.setChild(children);
 			} else {
 				treeData.add(treeVO);
 			}

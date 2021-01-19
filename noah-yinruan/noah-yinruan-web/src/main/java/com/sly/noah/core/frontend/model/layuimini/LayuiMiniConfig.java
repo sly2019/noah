@@ -1,5 +1,6 @@
 package com.sly.noah.core.frontend.model.layuimini;
 
+import com.sly.noah.core.frontend.model.LayuiMiniMenuTree;
 import lombok.Data;
 
 import java.util.List;
@@ -12,10 +13,10 @@ import java.util.List;
 @Data
 public class LayuiMiniConfig {
 
-    private LayuiMiniMenu homeInfo;
+    private LayuiMiniMenuTree homeInfo;
 
-    private LayuiMiniMenu logoInfo;
+    private LayuiMiniMenuTree logoInfo;
 
-    private List<LayuiMiniMenu> menuInfo;
+    private List<LayuiMiniMenuTree> menuInfo;
 
 }

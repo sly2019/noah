@@ -15,6 +15,6 @@ public abstract class BaseTree<T> implements Serializable {
 	private String name;
 	private String code;
 	private String description;
-	private List<T> children = new ArrayList<T>();
+	private List<T> child = new ArrayList<T>();
 
 }

@@ -10,7 +10,6 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan("com.sly")
-
 public class YinruanApplication {
 
     public static void main(String[] args) {

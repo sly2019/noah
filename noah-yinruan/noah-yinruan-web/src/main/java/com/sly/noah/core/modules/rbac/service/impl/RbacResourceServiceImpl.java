@@ -1,5 +1,7 @@
 package com.sly.noah.core.modules.rbac.service.impl;
 
+import com.sly.noah.core.frontend.helper.TreeVOHelper;
+import com.sly.noah.core.frontend.model.LayuiMiniMenuTree;
 import com.sly.noah.core.modules.rbac.dao.RbacResourceDao;
 import com.sly.noah.core.modules.rbac.entity.RbacResource;
 import com.sly.noah.core.modules.rbac.query_bean.RbacResourceQueryBean;
@@ -10,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -93,5 +96,30 @@ public class RbacResourceServiceImpl implements RbacResourceService {
             }
         }
     }
+
+    @Override
+    public List<LayuiMiniMenuTree> findAllLayTree() {
+        RbacResourceQueryBean queryBean = new RbacResourceQueryBean();
+        queryBean.setType("3");
+        List<RbacResourceVO> rbacResourceVOS = convertEntityToVO(getAll(queryBean));
+        List<LayuiMiniMenuTree> trees = new ArrayList<>();
+        for (RbacResourceVO rbacResourceVO : rbacResourceVOS) {
+            LayuiMiniMenuTree tree = new LayuiMiniMenuTree();
+            tree.setId(String.valueOf(rbacResourceVO.getId()));
+            tree.setPid(String.valueOf(rbacResourceVO.getPid()));
+            tree.setSpread(false);
+            tree.setName(rbacResourceVO.getName());
+            tree.setTitle(rbacResourceVO.getName());
+            tree.setHref(rbacResourceVO.getUri());
+            tree.setTarget("_self");
+            tree.setIcon("fa fa-address-book");
+            trees.add(tree);
+        }
+        List<LayuiMiniMenuTree> treeData = TreeVOHelper.getInstance().convertTreeModeFromPidToChildren(trees);
+        return treeData;
+    }
+
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.sly.noah.core.modules.rbac.service;
 
+import com.sly.noah.core.frontend.model.LayuiMiniMenuTree;
 import com.sly.noah.core.modules.rbac.entity.RbacResource;
 import com.sly.noah.core.modules.rbac.query_bean.RbacResourceQueryBean;
 import com.sly.noah.core.modules.rbac.vo.RbacResourceVO;
@@ -36,6 +37,14 @@ public interface RbacResourceService {
      * @param id
      */
     void deleteWithAllSubById(Integer id);
+
+
+    /**
+     * 取出所有的资源，并封装成树型结构
+     *
+     * @return
+     */
+    List<LayuiMiniMenuTree> findAllLayTree();
 
 
 }

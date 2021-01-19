@@ -20,15 +20,17 @@ public class LayuiMiniMenuTree extends BaseTree<LayuiMiniMenuTree> {
     private String pid;
     private String name;
     private String title;
+    private String image;
+    private String href;
+    private String target;
     private String field;
     private String code;
     private String description;
     private String icon;
-    private String href;
     private String value;
     private boolean spread;
     private boolean selected;
 
-    private List<LayuiMiniMenuTree> children = new ArrayList<>();
+    private List<LayuiMiniMenuTree> child = new ArrayList<>();
 
 }

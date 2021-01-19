@@ -13,4 +13,6 @@ public class RbacResourceQueryBean {
 
     private Integer pid;
 
+    private String type;
+
 }
