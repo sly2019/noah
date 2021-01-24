@@ -15,4 +15,6 @@ public class RbacResourceQueryBean {
 
     private String type;
 
+    private String uri;
+
 }

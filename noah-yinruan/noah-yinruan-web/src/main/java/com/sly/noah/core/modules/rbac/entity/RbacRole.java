@@ -5,17 +5,16 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * @Created by wj on 2020/12/13
- * @Description TODO
+ * @Author: wj
+ * @Date: 2021/1/24 15:15:00
+ * @Description: TODO
  */
 @Data
-public class RbacResource {
+public class RbacRole {
 
     private Integer id;
-    private Integer pid;
+    private String code;
     private String name;
-    private String uri;
-    private String type;
     private Integer rank;
     private String description;
     private Date createTime;

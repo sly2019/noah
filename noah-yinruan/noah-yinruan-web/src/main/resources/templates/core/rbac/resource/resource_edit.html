@@ -20,7 +20,7 @@
 	<div class="layui-fluid">
 		<div class="layui-box page_box layui-form" style="background: #fff">
 			<div class="layui-form-item">
-				<label class="layui-form-label">上级资源</label>
+				<label class="layui-form-label">上级资源：</label>
 				<div class="layui-input-block"  >
 					<input type="hidden" name="pid" th:value="${rbacResourceParent.id}" th:if="${rbacResourceParent != null}"/>
 					<input type="text" class="layui-input" th:value="${rbacResourceParent} != null ? ${rbacResourceParent.name} : '根'" disabled="disabled" />
@@ -45,7 +45,7 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">资源uri<i style="color: red">*</i>：</label>
+				<label class="layui-form-label">资源uri：</label>
 				<div class="layui-input-block">
 					<input type="text" name="uri" placeholder="请输入资源uri" autocomplete="off" class="layui-input" />
 				</div>

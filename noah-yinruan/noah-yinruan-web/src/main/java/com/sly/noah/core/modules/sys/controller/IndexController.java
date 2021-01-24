@@ -111,8 +111,6 @@ public class IndexController {
         layuiMiniConfig.setHomeInfo(homeInfo);
         layuiMiniConfig.setLogoInfo(logoInfo);
         layuiMiniConfig.setMenuInfo(rbacResourceService.findAllLayTree());
-        String jsonStr = JSONObject.toJSONString(layuiMiniConfig);
-        System.out.print(jsonStr);
         return layuiMiniConfig;
     }
 

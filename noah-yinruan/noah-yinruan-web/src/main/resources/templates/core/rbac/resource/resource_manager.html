@@ -63,11 +63,10 @@
                 [
                 {type: 'numbers'},
                 {field: 'name', minWidth: 200, title: '权限名称'},
-                {field: 'authority', title: '权限标识'},
-                {field: 'menuUrl', title: '菜单url'},
-                {field: 'rank', width: 100,  title: '排序号'},
+                {field: 'uri', title: 'uri'},
+                {field: 'rank', width: 200,  title: '排序号'},
                 {
-                    field: 'isMenu', width: 100, align: 'center', title: '类型', templet: function (d) {
+                    field: 'isMenu', width: 200, align: 'center', title: '类型', templet: function (d) {
                         if (d.type == 1) {
                             return  "<span class='layui-badge layui-bg-orange'>模块</span>";
                         } else  if (d.type == 2) {

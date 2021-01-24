@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>menu</title>
+	<link rel="stylesheet" th:href="@{/lib/layuimini/lib/layui-v2.5.5/css/layui.css}" media="all">
+	<link rel="stylesheet" th:href="@{/lib/layuimini/css/public.css}" media="all">
+
+	<style>
+		.layui-btn:not(.layui-btn-lg ):not(.layui-btn-sm):not(.layui-btn-xs) {
+			height: 34px;
+			line-height: 34px;
+			padding: 0 8px;
+		}
+	</style>
+</head>
+<body style="background-color: white">
+
+<form class="layui-form">
+	<div class="layui-fluid">
+		<div class="layui-box page_box layui-form" style="background: #fff">
+			<div class="layui-form-item">
+				<label class="layui-form-label">上级资源：</label>
+				<div class="layui-input-block"  >
+					<input type="hidden" name="pid" th:value="${rbacResourceParent.id}" th:if="${rbacResourceParent != null}"/>
+					<input type="text" class="layui-input" th:value="${rbacResourceParent} != null ? ${rbacResourceParent.name} : '根'" disabled="disabled" />
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">资源类型<i style="color: red">*</i>：</label>
+				<div class="layui-input-block">
+					<select class="layui-select" name="type" lay-verify="required">
+						<option value="">请选择类型</option>
+						<option value="1" >模块</option>
+						<option value="2" >目录</option>
+						<option value="3" >菜单</option>
+						<option value="4" >按钮</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">资源名称<i style="color: red">*</i>：</label>
+				<div class="layui-input-block">
+					<input type="text" name="name" placeholder="请输入资源名称" autocomplete="off" class="layui-input" lay-verify="required"/>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">资源uri：</label>
+				<div class="layui-input-block">
+					<input type="text" name="uri" placeholder="请输入资源uri" autocomplete="off" class="layui-input" />
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">排序号<i style="color: red">*</i>：</label>
+				<div class="layui-input-block">
+					<input type="text" name="rank" placeholder="请输入排序号" autocomplete="off" class="layui-input" />
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">说明：</label>
+				<div class="layui-input-block">
+					<textarea class="layui-textarea" name="description"placeholder="请输入说明"></textarea>
+				</div>
+			</div>
+			<div class="layui-form-item" style="width: 100%; text-align: center; padding: 10px 0 20px">
+				<button type="button" class="layui-btn layui-btn-danger" lay-submit="lay-submit" lay-filter="close">取消</button>
+				<button type="reset" class="layui-btn layui-btn-danger">重置</button>
+				<button class="layui-btn layui-btn-normal" lay-submit="lay-submit" lay-filter="add" >保存</button>
+			</div>
+		</div>
+	</div>
+</form>
+
+<script th:src="@{/lib/layuimini/lib/layui-v2.5.5/layui.js}"></script>
+<script th:src="@{/lib/layuimini/js/lay-config.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    layui.use(['table', 'treetable'], function () {
+        let $ = layui.jquery;
+        let form = layui.form;
+
+        form.on('submit(add)', function(data){
+            var loading = parent.layer.load();
+            $.ajax({
+                type: 'POST',
+                url : '/rbacResource/add',
+                data: data.field,
+                dataType: 'json',
+                success: function (result) {
+                    if(result.code == 200){
+                        let index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        parent.layer.close(loading);
+                        parent.layer.msg('保存成功', {icon: 1, time: 2000});
+                        let url = '/rbacResource/manager';
+                        parent.location.href = url;
+                    }else{
+                        parent.layer.close(loading);
+                        layer.alert(result.message, {title: '保存失败', icon: 2});
+                    }
+                },
+                error: function (result, type) {
+                    parent.layer.close(loading);
+                    layer.alert(result.message, {title: '保存失败', icon: 2});
+                }
+            });
+            return false;
+        });
+
+
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

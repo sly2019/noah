@@ -37,6 +37,9 @@
         <if test="type != null">
             and type=#{type}
         </if>
+        <if test="uri != null">
+            and uri=#{uri}
+        </if>
 
     </select>
 

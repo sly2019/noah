@@ -2,8 +2,10 @@ package com.sly.noah.core.modules.rbac.controller;
 
 import com.sly.noah.core.frontend.model.Result;
 import com.sly.noah.core.modules.rbac.entity.RbacResource;
+import com.sly.noah.core.modules.rbac.query_bean.RbacResourceQueryBean;
 import com.sly.noah.core.modules.rbac.service.RbacResourceService;
 import com.sly.noah.core.modules.rbac.vo.RbacResourceVO;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,16 +29,7 @@ public class RbacResourceController {
 
     @RequestMapping("/rbacResource/manager")
     public String manager(Model model){
-        return "core/rbac/resource/manager";
-    }
-
-    @RequestMapping("/rbacResource/toAdd")
-    public String toAdd(Model model, Integer pid){
-        if(pid != null){
-            RbacResource rbacResourceParent = rbacResourceService.getById(pid);
-            model.addAttribute("rbacResourceParent", rbacResourceParent);
-        }
-        return "core/rbac/resource/add";
+        return "core/rbac/resource/resource_manager";
     }
 
     @RequestMapping("/rbacResource/dataList")
@@ -51,12 +44,30 @@ public class RbacResourceController {
         return Result.failed("faild");
     }
 
+    @RequestMapping("/rbacResource/toAdd")
+    public String toAdd(Model model, Integer pid){
+        if(pid != null){
+            RbacResource rbacResourceParent = rbacResourceService.getById(pid);
+            model.addAttribute("rbacResourceParent", rbacResourceParent);
+        }
+        return "core/rbac/resource/resource_add";
+    }
+
     @RequestMapping("/rbacResource/add")
     @ResponseBody
-    public Object add(RbacResourceVO rbacResourceVO) {
+    public Object add(RbacResourceVO vo) {
         try {
-            RbacResource rbacResource = rbacResourceService.convertVOToEntity(rbacResourceVO);
-            if(rbacResourceVO.getPid() == null){
+            //菜单uri唯一性判断
+            if(StringUtils.isNotBlank(vo.getUri())){
+                RbacResourceQueryBean queryBean = new RbacResourceQueryBean();
+                queryBean.setUri(vo.getUri());
+                List<RbacResource> rbacResources = rbacResourceService.getAll(queryBean);
+                if(CollectionUtils.isNotEmpty(rbacResources)){
+                    return Result.failed("uri已存在");
+                }
+            }
+            RbacResource rbacResource = rbacResourceService.convertVOToEntity(vo);
+            if(vo.getPid() == null){
                 rbacResource.setPid(-1);
             }
             rbacResource.setCreateTime(new Date());
@@ -66,6 +77,11 @@ public class RbacResourceController {
             e.printStackTrace();
             return Result.failed("添加失败！\n" + e.getMessage());
         }
+    }
+
+    @RequestMapping("/rbacResource/toEdit")
+    public String toEdit(Model model, Integer id){
+        return "core/rbac/resource/resource_edit";
     }
 
     /**
