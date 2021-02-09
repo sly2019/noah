@@ -6,17 +6,11 @@ package com.sly.noah.core.frontend.model;
  */
 public class Result<T> {
 
-    /**
-     * 状态码
-     */
-    private long code;
+    private boolean success = false;//是否成功
 
-    /**
-     * 提示信息
-     */
-    private String message;
+    private long code;//状态吗
 
-    private long count;
+    private String message;//提示信息
 
     /**
      * 数据封装
@@ -26,7 +20,8 @@ public class Result<T> {
     public Result() {
     }
 
-    protected Result(long code, String message, T data) {
+    protected Result(boolean success, long code, String message, T data) {
+        this.success = success;
         this.code = code;
         this.message = message;
         this.data = data;
@@ -39,7 +34,7 @@ public class Result<T> {
      * @return
      */
     public static <T> Result<T> success() {
-        return new Result<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), null);
+        return new Result<T>(true, ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), null);
     }
 
     /**
@@ -48,7 +43,7 @@ public class Result<T> {
      * @param data 获取的数据
      */
     public static <T> Result<T> success(T data) {
-        return new Result<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
+        return new Result<T>(true, ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
     }
 
     /**
@@ -58,7 +53,7 @@ public class Result<T> {
      * @param  message 提示信息
      */
     public static <T> Result<T> success(T data, String message) {
-        return new Result<T>(ResultCode.SUCCESS.getCode(), message, data);
+        return new Result<T>(true, ResultCode.SUCCESS.getCode(), message, data);
     }
 
     /**
@@ -66,7 +61,7 @@ public class Result<T> {
      * @param errorCode 错误码
      */
     public static <T> Result<T> failed(IErrorCode errorCode) {
-        return new Result<T>(errorCode.getCode(), errorCode.getMessage(), null);
+        return new Result<T>(false, errorCode.getCode(), errorCode.getMessage(), null);
     }
 
     /**
@@ -75,7 +70,7 @@ public class Result<T> {
      * @param message 错误信息
      */
     public static <T> Result<T> failed(IErrorCode errorCode,String message) {
-        return new Result<T>(errorCode.getCode(), message, null);
+        return new Result<T>(false, errorCode.getCode(), message, null);
     }
 
     /**
@@ -83,7 +78,7 @@ public class Result<T> {
      * @param message 提示信息
      */
     public static <T> Result<T> failed(String message) {
-        return new Result<T>(ResultCode.FAILED.getCode(), message, null);
+        return new Result<T>(false, ResultCode.FAILED.getCode(), message, null);
     }
 
     /**
@@ -105,21 +100,21 @@ public class Result<T> {
      * @param message 提示信息
      */
     public static <T> Result<T> validateFailed(String message) {
-        return new Result<T>(ResultCode.VALIDATE_FAILED.getCode(), message, null);
+        return new Result<T>(false, ResultCode.VALIDATE_FAILED.getCode(), message, null);
     }
 
     /**
      * 未登录返回结果
      */
     public static <T> Result<T> unauthorized(T data) {
-        return new Result<T>(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), data);
+        return new Result<T>(false, ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), data);
     }
 
     /**
      * 未授权返回结果
      */
     public static <T> Result<T> forbidden(T data) {
-        return new Result<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
+        return new Result<T>(false, ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
 
     public long getCode() {
@@ -136,14 +131,6 @@ public class Result<T> {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public long getCount() {
-        return count;
-    }
-
-    public void setCount(long count) {
-        this.count = count;
     }
 
     public T getData() {

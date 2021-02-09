@@ -1,12 +1,12 @@
 package com.sly.noah.core.modules.rbac.controller;
 
 import com.sly.noah.core.frontend.model.Result;
-import com.sly.noah.core.modules.rbac.entity.RbacResource;
+import com.sly.noah.core.modules.rbac.jpa.entity.RbacResource;
 import com.sly.noah.core.modules.rbac.query_bean.RbacResourceQueryBean;
 import com.sly.noah.core.modules.rbac.service.RbacResourceService;
 import com.sly.noah.core.modules.rbac.vo.RbacResourceVO;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -27,24 +29,25 @@ public class RbacResourceController {
     @Resource
     private RbacResourceService rbacResourceService;
 
-    @RequestMapping("/rbacResource/manager")
+    @RequestMapping("/rbac/resource/manager")
     public String manager(Model model){
         return "core/rbac/resource/resource_manager";
     }
 
-    @RequestMapping("/rbacResource/dataList")
+    @RequestMapping("/rbac/resource/dataList")
     @ResponseBody
     public Object dataList(){
         try {
-            List<RbacResource> list = rbacResourceService.getAll();
-            return Result.success(list, "ok");
+            Sort sort = Sort.by(Sort.Direction.ASC , "rank");
+            List<RbacResource> list = rbacResourceService.getAll(null, sort);
+            return Result.success(list, "获取数据成功");
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Result.failed("faild");
+        return Result.failed("获取数据失败");
     }
 
-    @RequestMapping("/rbacResource/toAdd")
+    @RequestMapping("/rbac/resource/toAdd")
     public String toAdd(Model model, Integer pid){
         if(pid != null){
             RbacResource rbacResourceParent = rbacResourceService.getById(pid);
@@ -53,7 +56,7 @@ public class RbacResourceController {
         return "core/rbac/resource/resource_add";
     }
 
-    @RequestMapping("/rbacResource/add")
+    @RequestMapping("/rbac/resource/add")
     @ResponseBody
     public Object add(RbacResourceVO vo) {
         try {
@@ -61,8 +64,8 @@ public class RbacResourceController {
             if(StringUtils.isNotBlank(vo.getUri())){
                 RbacResourceQueryBean queryBean = new RbacResourceQueryBean();
                 queryBean.setUri(vo.getUri());
-                List<RbacResource> rbacResources = rbacResourceService.getAll(queryBean);
-                if(CollectionUtils.isNotEmpty(rbacResources)){
+                long count = rbacResourceService.count(queryBean);
+                if(count > 0){
                     return Result.failed("uri已存在");
                 }
             }
@@ -79,8 +82,9 @@ public class RbacResourceController {
         }
     }
 
-    @RequestMapping("/rbacResource/toEdit")
+    @RequestMapping("/rbac/resource/toEdit")
     public String toEdit(Model model, Integer id){
+        model.addAttribute("rbacResource", rbacResourceService.convertEntityToVO(rbacResourceService.getById(id)));
         return "core/rbac/resource/resource_edit";
     }
 
@@ -89,7 +93,7 @@ public class RbacResourceController {
      * @param id
      * @return
      */
-    @RequestMapping("/rbacResource/delete")
+    @RequestMapping("/rbac/resource/delete")
     @ResponseBody
     @Transactional
     public Object delete(Integer id) {
@@ -101,7 +105,5 @@ public class RbacResourceController {
             return Result.failed("删除失败！\n" + e.getMessage());
         }
     }
-
-
 
 }

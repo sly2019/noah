@@ -1,4 +1,4 @@
-package com.sly.noah.core.modules.rbac.entity;
+package com.sly.noah.core.modules.rbac.jpa.entity;
 
 import lombok.Data;
 

@@ -20,6 +20,7 @@
         <module>noah-demo</module>
         <module>noah-yinruan</module>
         <module>noah-common</module>
+        <module>noah-common</module>
     </modules>
 
     <properties>

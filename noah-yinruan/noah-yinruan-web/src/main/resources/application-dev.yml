@@ -1,0 +1,8 @@
+spring:
+
+  datasource:
+    url: jdbc:mysql://sly-net:33006/noah?characterEncoding=utf8&useSSL=false
+    username: noah
+    password: noah
+    driver-class-name: com.mysql.jdbc.Driver
+

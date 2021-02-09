@@ -1,9 +1,10 @@
 package com.sly.noah.core.modules.rbac.service;
 
 import com.sly.noah.core.frontend.model.LayuiMiniMenuTree;
-import com.sly.noah.core.modules.rbac.entity.RbacResource;
+import com.sly.noah.core.modules.rbac.jpa.entity.RbacResource;
 import com.sly.noah.core.modules.rbac.query_bean.RbacResourceQueryBean;
 import com.sly.noah.core.modules.rbac.vo.RbacResourceVO;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -13,15 +14,15 @@ import java.util.List;
  */
 public interface RbacResourceService {
 
-    int count();
+    long count(RbacResourceQueryBean queryBean);
 
     RbacResource getById(Integer id);
 
-    int save(RbacResource rbacResource);
-
-    List<RbacResource> getAll();
+    RbacResource save(RbacResource rbacResource);
 
     List<RbacResource> getAll(RbacResourceQueryBean queryBean);
+
+    List<RbacResource> getAll(RbacResourceQueryBean queryBean, Sort sort);
 
     RbacResourceVO convertEntityToVO(RbacResource rbacResource);
 

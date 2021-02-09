@@ -25,7 +25,7 @@
         <div style="margin-top: 10px">
             <button type="button" class="layui-btn layui-btn-normal" id="btn-expand">全部展开</button>
             <button type="button" class="layui-btn layui-btn-normal" id="btn-fold">全部折叠</button>
-            <button type="button" class="layui-btn layui-btn-danger" lay-submit="lay-submit" lay-filter="addRoot">添加模块</button>
+            <button type="button" class="layui-btn layui-btn-danger" lay-submit="lay-submit" lay-filter="addRoot">添加字典</button>
         </div>
         <div>
             <table id="munu-table" class="layui-table" lay-filter="munu-table"></table>
@@ -57,27 +57,15 @@
             treeIdName: 'authorityId',
             treePidName: 'parentId',
             elem: '#munu-table',
-            url: '/rbac/resource/dataList',
+            url: '/sys/dic/dataList',
             page: false,
             cols: [
                 [
                 {type: 'numbers'},
-                {field: 'name', minWidth: 200, title: '权限名称'},
-                {field: 'uri', title: 'uri'},
+                {field: 'name', minWidth: 200, title: '名称'},
+                {field: 'code', title: '编码'},
                 {field: 'rank', width: 200,  title: '排序号'},
-                {
-                    field: 'isMenu', width: 200, align: 'center', title: '类型', templet: function (d) {
-                        if (d.type == 1) {
-                            return  "<span class='layui-badge layui-bg-orange'>模块</span>";
-                        } else  if (d.type == 2) {
-                            return  "<span class='layui-badge layui-bg-green'>目录</span>";
-                        } else  if (d.type == 3) {
-                            return  "<span class='layui-badge layui-bg-cyan'>菜单</span>";
-                        } else  if (d.type == 4) {
-                            return  "<span class='layui-badge layui-bg-blue'>按钮</span>";
-                        }
-                    },
-                },
+                {field: 'description', title: '说明'},
                 {templet: '#auth-state', width: 200, align: 'center', title: '操作'}
             ]
             ],
@@ -86,20 +74,16 @@
             }
         });
 
-        form.on('submit(addRoot)', function(data) {
+        form.on('submit(addModule)', function(data) {
             let urlForAdd = /*[[@{/rbac/resource/toAdd}]]*/ '';
             urlForAdd += "?pid=";
-            let index = layer.open({
+            layer.open({
                 type : 2,
                 content : urlForAdd,
                 title : '添加',
-                area : [ '100%', '100%' ],
+                area : [ '800px', '520px' ],
                 maxmin : true
             });
-            $(window).on("resize", function () {
-                layer.full(index);
-            });
-            return false;
         });
 
         $('#btn-expand').click(function () {
@@ -136,29 +120,23 @@
             } else if (layEvent === 'edit') {
                 let url = /*[[@{/rbac/resource/toEdit}]]*/ '';
                 url += "?id=" + data.id;
-                let index = layer.open({
+                layer.open({
                     type: 2,
                     content: url,
                     title: '添加',
-                    area: ['100%', '100%'],
+                    area: ['800px', '520px'],
                     maxmin: true
-                });
-                $(window).on("resize", function () {
-                    layer.full(index);
                 });
                 return false;
             } else if(layEvent === 'add') {
                 let urlForAdd = /*[[@{/rbac/resource/toAdd}]]*/ '';
                 urlForAdd += "?pid=" + data.id;
-                let index = layer.open({
+                layer.open({
                     type: 2,
                     content: urlForAdd,
                     title: '添加',
-                    area: ['100%', '100%'],
+                    area: ['800px', '520px'],
                     maxmin: true
-                });
-                $(window).on("resize", function () {
-                    layer.full(index);
                 });
                 return false;
             }

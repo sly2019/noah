@@ -3,9 +3,24 @@ server:
 
 spring:
 
+  profiles:
+    active: '@activatedProperties@'
+
   thymeleaf:
     mode: HTML # HTML LEGACYHTML5
     cache: false
+
+  jpa:
+    hibernate:
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        enable_lazy_load_no_trans: true
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+    open-in-view: true
+    show-sql: false
 
   datasource:
     url: jdbc:mysql://sly-net:33006/noah?characterEncoding=utf8&useSSL=false
@@ -13,6 +28,14 @@ spring:
     password: noah
     driver-class-name: com.mysql.jdbc.Driver
 
-mybatis:
-  mapper-locations: classpath*:com/**/mapper/*.xml
+logging:
+  level:
+    root: info
+    com:
+      sly: debug
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSSS} %-5level %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSSS} %-5level %msg%n"
+  file:
+    name: ./logs/wcs-web.log
 

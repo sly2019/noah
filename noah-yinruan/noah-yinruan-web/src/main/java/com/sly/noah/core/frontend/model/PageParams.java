@@ -1,7 +1,6 @@
 package com.sly.noah.core.frontend.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 基础页面参数
@@ -9,8 +8,7 @@ import lombok.Setter;
  * @author ninghaitao
  *
  */
-@Getter
-@Setter
+@Data
 public class PageParams {
 
 	/**

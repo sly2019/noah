@@ -80,10 +80,10 @@
         let form = layui.form;
 
         form.on('submit(add)', function(data){
-            var loading = parent.layer.load();
+            let loading = parent.layer.load();
             $.ajax({
                 type: 'POST',
-                url : '/rbacResource/add',
+                url : '/rbac/resource/add',
                 data: data.field,
                 dataType: 'json',
                 success: function (result) {
@@ -106,8 +106,6 @@
             });
             return false;
         });
-
-
     });
     /*]]>*/
 </script>

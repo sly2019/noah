@@ -2,9 +2,8 @@ package com.sly.noah.core.modules.sys.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sly.noah.core.frontend.model.LayuiMiniMenuTree;
-import com.sly.noah.core.frontend.model.layuimini.LayuiMiniConfig;
 import com.sly.noah.core.frontend.model.Result;
-import com.sly.noah.core.modules.rbac.entity.RbacResource;
+import com.sly.noah.core.frontend.model.layuimini.LayuiMiniConfig;
 import com.sly.noah.core.modules.rbac.service.RbacResourceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +18,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 
 /**
  * @Created by wj on 2020/12/10

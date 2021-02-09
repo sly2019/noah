@@ -2,16 +2,18 @@ package com.sly.noah.core.modules.rbac.service.impl;
 
 import com.sly.noah.core.frontend.helper.TreeVOHelper;
 import com.sly.noah.core.frontend.model.LayuiMiniMenuTree;
-import com.sly.noah.core.modules.rbac.dao.RbacResourceDao;
-import com.sly.noah.core.modules.rbac.entity.RbacResource;
+import com.sly.noah.core.modules.rbac.jpa.entity.RbacResource;
+import com.sly.noah.core.modules.rbac.jpa.repository.RbacResourceRepo;
+import com.sly.noah.core.modules.rbac.jpa.specification.RbacResourceSpec;
 import com.sly.noah.core.modules.rbac.query_bean.RbacResourceQueryBean;
 import com.sly.noah.core.modules.rbac.service.RbacResourceService;
 import com.sly.noah.core.modules.rbac.vo.RbacResourceVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,32 +25,32 @@ import java.util.List;
 @Service
 public class RbacResourceServiceImpl implements RbacResourceService {
 
-    @Autowired
-    private RbacResourceDao rbacResourceDao;
+    @Resource
+    private RbacResourceRepo rbacResourceRepo;
 
     @Override
-    public int count() {
-        return rbacResourceDao.count();
+    public long count(RbacResourceQueryBean queryBean) {
+        return rbacResourceRepo.count(RbacResourceSpec.buildSpecification(queryBean));
     }
 
     @Override
-    public int save(RbacResource rbacResource) {
-        return rbacResourceDao.add(rbacResource);
+    public RbacResource save(RbacResource rbacResource) {
+        return rbacResourceRepo.save(rbacResource);
     }
 
     @Override
     public RbacResource getById(Integer id) {
-        return rbacResourceDao.getById(id);
-    }
-
-    @Override
-    public List<RbacResource> getAll() {
-        return rbacResourceDao.getAll();
+        return rbacResourceRepo.findById(id).get();
     }
 
     @Override
     public List<RbacResource> getAll(RbacResourceQueryBean queryBean) {
-        return rbacResourceDao.getByQueryBean(queryBean);
+        return rbacResourceRepo.findAll(RbacResourceSpec.buildSpecification(queryBean));
+    }
+
+    @Override
+    public List<RbacResource> getAll(RbacResourceQueryBean queryBean, Sort sort) {
+        return rbacResourceRepo.findAll(RbacResourceSpec.buildSpecification(queryBean), sort);
     }
 
     @Override
@@ -79,7 +81,7 @@ public class RbacResourceServiceImpl implements RbacResourceService {
 
     @Override
     public void delete(Integer id) {
-        rbacResourceDao.delete(id);
+        rbacResourceRepo.deleteById(id);
     }
 
     @Override
