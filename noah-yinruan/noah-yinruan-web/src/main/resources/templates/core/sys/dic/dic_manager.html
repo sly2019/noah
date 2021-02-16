@@ -74,8 +74,8 @@
             }
         });
 
-        form.on('submit(addModule)', function(data) {
-            let urlForAdd = /*[[@{/rbac/resource/toAdd}]]*/ '';
+        form.on('submit(addRoot)', function(data) {
+            let urlForAdd = /*[[@{/sys/dic/toAdd}]]*/ '';
             urlForAdd += "?pid=";
             layer.open({
                 type : 2,
@@ -129,7 +129,7 @@
                 });
                 return false;
             } else if(layEvent === 'add') {
-                let urlForAdd = /*[[@{/rbac/resource/toAdd}]]*/ '';
+                let urlForAdd = /*[[@{/sys/dic/toAdd}]]*/ '';
                 urlForAdd += "?pid=" + data.id;
                 layer.open({
                     type: 2,

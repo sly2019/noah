@@ -1,4 +1,4 @@
-package com.sly.noah.core.modules.sys.jpa.entity;
+package com.sly.noah.core.modules.rbac.jpa.entity;
 
 import lombok.Data;
 
@@ -7,14 +7,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Author: wj
- * @Date: 2021/2/8 15:24:04
+ * @Created by wj on 2021/2/16
  * @Description: TODO
  */
 @Data
 @Entity
-@Table(name = "sys_dic")
-public class SysDic implements Serializable {
+@Table(name = "rbac_team")
+public class RbacTeam implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,9 +28,6 @@ public class SysDic implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "code")
-    private String code;
-
     @Column(name = "description")
     private String description;
 
@@ -40,5 +36,7 @@ public class SysDic implements Serializable {
 
     @Column(name = "last_update_time")
     private Date lastUpdateTime;
+
+
 
 }

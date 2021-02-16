@@ -27,4 +27,6 @@ public interface SysDicService {
     SysDic convertVOToEntity(SysDicVO sysDicVO);
 
     void delete(Integer id);
+
+    void deleteWithAllSubById(Integer id);
 }

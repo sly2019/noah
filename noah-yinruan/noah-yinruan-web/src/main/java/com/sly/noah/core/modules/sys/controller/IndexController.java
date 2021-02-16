@@ -29,6 +29,11 @@ public class IndexController {
     @Resource
     private RbacResourceService rbacResourceService;
 
+    @RequestMapping(value = "/")
+    public String index() {
+        return "login";
+    }
+
 
     @RequestMapping(value = "/login")
     public String login() {
@@ -49,7 +54,8 @@ public class IndexController {
     @ResponseBody
     public Object login(HttpServletRequest request, String username, String password) {
         try {
-            return Result.success();
+            Result result = Result.success();
+            return result;
         } catch (Exception e) {
             return Result.failed(e.getMessage());
         }

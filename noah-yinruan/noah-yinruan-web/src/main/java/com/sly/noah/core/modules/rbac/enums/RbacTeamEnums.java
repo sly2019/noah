@@ -1,18 +1,17 @@
-package com.sly.noah.core.modules.sys.enums;
+package com.sly.noah.core.modules.rbac.enums;
 
 /**
- * @Created by wj on 2021/2/9
+ * @Created by wj on 2021/2/16
  * @Description: TODO
  */
-public class SysDicEnums {
+public class RbacTeamEnums {
 
     /**
      * 字段类属性
      *
      */
     public enum PropertyEnum {
-        code,
-        pid,
+        uri,
         ;
     }
 
@@ -24,5 +23,4 @@ public class SysDicEnums {
         id,
         ;
     }
-
 }

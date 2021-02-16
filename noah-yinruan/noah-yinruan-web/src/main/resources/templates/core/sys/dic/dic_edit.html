@@ -19,23 +19,24 @@
 <form class="layui-form">
 	<div class="layui-fluid">
 		<div class="layui-box page_box layui-form" style="background: #fff">
-			<input type="hidden" name="pid" th:value="${pid}"/>
+			<input type="hidden" name="pid"  class="layui-input" th:value="${sysDic.pid}">
+			<input type="hidden" name="id"  class="layui-input" th:value="${sysDic.id}">
 			<div class="layui-form-item">
 				<label class="layui-form-label">名称<i style="color: red">*</i>：</label>
 				<div class="layui-input-block">
-					<input type="text" name="name" placeholder="请输入名称" autocomplete="off" class="layui-input" lay-verify="required"/>
+					<input type="text" name="name" placeholder="请输入名称" autocomplete="off" class="layui-input" lay-verify="required" th:value="${sysDic.name}"/>
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">编码：</label>
 				<div class="layui-input-block">
-					<input type="text" name="code" placeholder="请输入编码" autocomplete="off" class="layui-input" />
+					<input type="text" name="code" placeholder="请输入编码" autocomplete="off" class="layui-input" th:value="${sysDic.code}"/>
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">说明：</label>
 				<div class="layui-input-block">
-					<textarea class="layui-textarea" name="description"placeholder="请输入说明"></textarea>
+					<textarea class="layui-textarea" name="description" th:value="${sysDic.description}" th:text="${sysDic.description}"></textarea>
 				</div>
 			</div>
 			<div class="layui-form-item" style="width: 100%; text-align: center; padding: 10px 0 20px">
@@ -58,7 +59,7 @@
             let loading = parent.layer.load();
             $.ajax({
                 type: 'POST',
-                url : '/sys/dic/add',
+                url : '/rbac/resource/add',
                 data: data.field,
                 dataType: 'json',
                 success: function (result) {
@@ -67,16 +68,16 @@
                         parent.layer.close(index);
                         parent.layer.close(loading);
                         parent.layer.msg('保存成功', {icon: 1, time: 2000});
-                        let url = '/sys/dic/manager';
+                        let url = '/rbacResource/manager';
                         parent.location.href = url;
                     }else{
                         parent.layer.close(loading);
-                        layer.alert(result.message, {title: '保存失败', icon: 2});
+                        layer.alert(result.msg, {title: '保存失败', icon: 2});
                     }
                 },
                 error: function (result, type) {
                     parent.layer.close(loading);
-                    layer.alert(result.message, {title: '保存失败', icon: 2});
+                    layer.alert(result.msg, {title: '保存失败', icon: 2});
                 }
             });
             return false;

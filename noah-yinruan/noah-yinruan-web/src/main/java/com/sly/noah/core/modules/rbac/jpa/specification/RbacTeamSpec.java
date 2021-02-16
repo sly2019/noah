@@ -1,9 +1,9 @@
 package com.sly.noah.core.modules.rbac.jpa.specification;
 
-import com.sly.noah.core.modules.rbac.enums.RbacResourceEnums;
 import com.sly.noah.core.modules.rbac.jpa.entity.RbacResource;
+import com.sly.noah.core.modules.rbac.jpa.entity.RbacTeam;
 import com.sly.noah.core.modules.rbac.query_bean.RbacResourceQueryBean;
-import org.apache.commons.lang3.StringUtils;
+import com.sly.noah.core.modules.rbac.query_bean.RbacTeamQueryBean;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,16 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Created by wj on 2021/2/8
+ * @Created by wj on 2021/2/16
  * @Description: TODO
  */
-public class RbacResourceSpec {
+public class RbacTeamSpec {
 
-    public static Specification<RbacResource> buildSpecification(RbacResourceQueryBean queryBean) {
+    public static Specification<RbacTeam> buildSpecification(RbacTeamQueryBean queryBean) {
         if (queryBean == null) {
             return null;
         }
-        return (Specification<RbacResource>) (root, query, builder) -> {
+        return (Specification<RbacTeam>) (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             {
@@ -34,14 +34,8 @@ public class RbacResourceSpec {
         };
     }
 
-    private static void baseBuild(RbacResourceQueryBean queryBean, Root<RbacResource> root, CriteriaBuilder builder, List<Predicate> predicates) {
+    private static void baseBuild(RbacTeamQueryBean queryBean, Root<RbacTeam> root, CriteriaBuilder builder, List<Predicate> predicates) {
 
-        //uri
-        {
-            if(StringUtils.isNotBlank(queryBean.getUri())){
-                predicates.add(builder.equal(root.get(RbacResourceEnums.PropertyEnum.uri.name()), queryBean.getUri()));
-            }
-        }
     }
 
     private static String buildLikeString(String likeStr) {

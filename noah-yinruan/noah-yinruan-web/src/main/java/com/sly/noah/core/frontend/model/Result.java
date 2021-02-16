@@ -140,4 +140,12 @@ public class Result<T> {
     public void setData(T data) {
         this.data = data;
     }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 }

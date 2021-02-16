@@ -11,4 +11,6 @@ public class SysDicQueryBean {
 
     private String code;
 
+    private Integer pid;
+
 }

@@ -4,7 +4,7 @@ package com.sly.noah.core.modules.rbac.enums;
  * @Created by wj on 2021/2/8
  * @Description: TODO
  */
-public class RbacResourceColumnNameEnums {
+public class RbacResourceEnums {
 
     /**
      * 字段类属性

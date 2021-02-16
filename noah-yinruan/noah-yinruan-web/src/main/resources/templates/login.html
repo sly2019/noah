@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
-<link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" />
-<link rel="stylesheet" th:href="@{/css/login/v1/normalize.css}" />
-<link rel="stylesheet" th:href="@{/css/login/v1/login.css}" />
+<link rel="stylesheet" th:href="@{/lib/layuimini/lib/layui-v2.5.5/css/layui.css}" media="all">
+<link rel="stylesheet" th:href="@{/css/normalize.css}" />
+<link rel="stylesheet" th:href="@{/css/login.css}" />
 
 </head>
 
@@ -20,12 +20,9 @@
 	</form>
 </div>
 
-<script th:src="@{/lib/layui/layui.js}"></script>
+<script th:src="@{/lib/layuimini/lib/layui-v2.5.5/layui.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var loginUrl = /*[[@{/login}]]*/ '';
-    var indexUrl = /*[[@{/index}]]*/ '';
-
     layui.use([ 'form', 'layer', 'jquery', 'element' ], function() {
         var $ = layui.jquery;
         var form = layui.form;
@@ -40,14 +37,15 @@
             });
             // 登陆验证
             $.ajax({
-                url : loginUrl,
+                url : 'login',
                 type : 'post',
                 dataType : 'json',
                 data : data.field,
                 success : function(result) {
                     top.layer.close(loginLoading);
+                    console.log(result)
                     if (result.success) {
-                        window.location.href = indexUrl;
+                        window.location.href = 'index';
                     } else {
                         layer.msg(result.msg, {
                             icon : 2
@@ -55,7 +53,7 @@
                     }
                 },
                 error: function (result, type) {
-                    window.location.href = loginUrl;
+                    window.location.href = 'login';
                 }
             });
             return false;

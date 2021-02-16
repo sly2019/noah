@@ -1,7 +1,9 @@
 package com.sly.noah.core.modules.sys.jpa.specification;
 
+import com.sly.noah.core.modules.sys.enums.SysDicEnums;
 import com.sly.noah.core.modules.sys.jpa.entity.SysDic;
 import com.sly.noah.core.modules.sys.query_bean.SysDicQueryBean;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -33,6 +35,21 @@ public class SysDicSpec {
     }
 
     private static void baseBuild(SysDicQueryBean queryBean, Root<SysDic> root, CriteriaBuilder builder, List<Predicate> predicates) {
+
+        //code
+        {
+            if(StringUtils.isNotBlank(queryBean.getCode())){
+                predicates.add(builder.equal(root.get(SysDicEnums.PropertyEnum.code.name()), queryBean.getCode()));
+            }
+        }
+
+        //pid
+        {
+            if(queryBean.getPid() != null){
+                predicates.add(builder.equal(root.get(SysDicEnums.PropertyEnum.pid.name()), queryBean.getPid()));
+            }
+        }
+
 
     }
 

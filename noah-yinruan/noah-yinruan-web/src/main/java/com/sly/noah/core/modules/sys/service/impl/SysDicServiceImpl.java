@@ -6,6 +6,7 @@ import com.sly.noah.core.modules.sys.jpa.specification.SysDicSpec;
 import com.sly.noah.core.modules.sys.query_bean.SysDicQueryBean;
 import com.sly.noah.core.modules.sys.service.SysDicService;
 import com.sly.noah.core.modules.sys.vo.SysDicVO;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -69,5 +70,20 @@ public class SysDicServiceImpl implements SysDicService {
     @Override
     public void delete(Integer id) {
         sysDicRepo.deleteById(id);
+    }
+
+    @Override
+    public void deleteWithAllSubById(Integer id) {
+        //删除自身
+        this.delete(id);
+        //递归删除子节点
+        SysDicQueryBean queryBean = new SysDicQueryBean();
+        queryBean.setPid(id);
+        List<SysDic> sysDics = getAll(queryBean);
+        if (CollectionUtils.isNotEmpty(sysDics)){
+            for(SysDic sysDic : sysDics){
+                deleteWithAllSubById(sysDic.getId());
+            }
+        }
     }
 }
