@@ -25,7 +25,7 @@
         <div style="margin-top: 10px">
             <button type="button" class="layui-btn layui-btn-normal" id="btn-expand">全部展开</button>
             <button type="button" class="layui-btn layui-btn-normal" id="btn-fold">全部折叠</button>
-            <button type="button" class="layui-btn layui-btn-danger" lay-submit="lay-submit" lay-filter="addRoot">添加字典</button>
+            <button type="button" class="layui-btn layui-btn-danger" lay-submit="lay-submit" lay-filter="addRoot">添加顶级机构</button>
         </div>
         <div>
             <table id="munu-table" class="layui-table" lay-filter="munu-table"></table>
@@ -57,15 +57,27 @@
             treeIdName: 'authorityId',
             treePidName: 'parentId',
             elem: '#munu-table',
-            url: '/sys/dic/dataList',
+            url: '/rbac/resource/dataList',
             page: false,
             cols: [
                 [
                 {type: 'numbers'},
-                {field: 'name', minWidth: 200, title: '名称'},
-                {field: 'code', title: '编码'},
+                {field: 'name', minWidth: 200, title: '权限名称'},
+                {field: 'uri', title: 'uri'},
                 {field: 'rank', width: 200,  title: '排序号'},
-                {field: 'description', title: '说明'},
+                {
+                    field: 'isMenu', width: 200, align: 'center', title: '类型', templet: function (d) {
+                        if (d.type == 1) {
+                            return  "<span class='layui-badge layui-bg-orange'>模块</span>";
+                        } else  if (d.type == 2) {
+                            return  "<span class='layui-badge layui-bg-green'>目录</span>";
+                        } else  if (d.type == 3) {
+                            return  "<span class='layui-badge layui-bg-cyan'>菜单</span>";
+                        } else  if (d.type == 4) {
+                            return  "<span class='layui-badge layui-bg-blue'>按钮</span>";
+                        }
+                    },
+                },
                 {templet: '#auth-state', width: 200, align: 'center', title: '操作'}
             ]
             ],
@@ -75,15 +87,19 @@
         });
 
         form.on('submit(addRoot)', function(data) {
-            let urlForAdd = /*[[@{/sys/dic/toAdd}]]*/ '';
+            let urlForAdd = /*[[@{/rbac/resource/toAdd}]]*/ '';
             urlForAdd += "?pid=";
-            layer.open({
+            let index = layer.open({
                 type : 2,
                 content : urlForAdd,
                 title : '添加',
-                area: ['100%', '100%'],
+                area : [ '100%', '100%' ],
                 maxmin : true
             });
+            $(window).on("resize", function () {
+                layer.full(index);
+            });
+            return false;
         });
 
         $('#btn-expand').click(function () {
@@ -102,14 +118,15 @@
             if (layEvent === 'del') {
                 layer.confirm('确定删除该数据么？', {title: '删除', icon: 2}, function (index) {
                     var loading = layer.load();
-                    $.post(/*[[@{/sys/dic/delete}]]*/ '', {
+                    $.post(/*[[@{/rbac/resource/delete}]]*/ '', {
                         id: obj.data.id
                     }, function (result) {
                         if (result.code == 200) {
                             layer.close(loading);
                             layer.close(index);
                             layer.msg(result.msg, {icon: 1, time: 2000});
-                            window.location.href = /*[[@{/sys/dic/manager}]]*/ '';
+                            //obj.del();
+                            window.location.href = /*[[@{/rbac/resource/manager}]]*/ '';
                         } else {
                             layer.close(loading);
                             layer.alert(result.msg, {title: "错误", icon: 2});
@@ -117,25 +134,31 @@
                     }, 'JSON');
                 });
             } else if (layEvent === 'edit') {
-                let url = /*[[@{/sys/dic/toEdit}]]*/ '';
+                let url = /*[[@{/rbac/resource/toEdit}]]*/ '';
                 url += "?id=" + data.id;
-                layer.open({
+                let index = layer.open({
                     type: 2,
                     content: url,
                     title: '添加',
                     area: ['100%', '100%'],
                     maxmin: true
                 });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
                 return false;
             } else if(layEvent === 'add') {
-                let urlForAdd = /*[[@{/sys/dic/toAdd}]]*/ '';
+                let urlForAdd = /*[[@{/rbac/resource/toAdd}]]*/ '';
                 urlForAdd += "?pid=" + data.id;
-                layer.open({
+                let index = layer.open({
                     type: 2,
                     content: urlForAdd,
                     title: '添加',
                     area: ['100%', '100%'],
                     maxmin: true
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
                 });
                 return false;
             }

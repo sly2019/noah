@@ -41,7 +41,7 @@
 			</div>
 			<div class="layui-form-item" style="width: 100%; text-align: center; padding: 10px 0 20px">
 				<button type="reset" class="layui-btn layui-btn-danger">重置</button>
-				<button class="layui-btn layui-btn-normal" lay-submit="lay-submit" lay-filter="add" >保存</button>
+				<button class="layui-btn layui-btn-normal" lay-submit="lay-submit" lay-filter="edit" >保存</button>
 			</div>
 		</div>
 	</div>
@@ -55,29 +55,29 @@
         let $ = layui.jquery;
         let form = layui.form;
 
-        form.on('submit(add)', function(data){
+        form.on('submit(edit)', function(data){
             let loading = parent.layer.load();
             $.ajax({
                 type: 'POST',
-                url : '/rbac/resource/add',
+                url : '/sys/dic/edit',
                 data: data.field,
                 dataType: 'json',
                 success: function (result) {
-                    if(result.code == 200){
+                    if(result.success){
                         let index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                         parent.layer.close(loading);
                         parent.layer.msg('保存成功', {icon: 1, time: 2000});
-                        let url = '/rbacResource/manager';
+                        let url = '/sys/dic/manager';
                         parent.location.href = url;
                     }else{
                         parent.layer.close(loading);
-                        layer.alert(result.msg, {title: '保存失败', icon: 2});
+                        layer.alert(result.message, {title: '保存失败', icon: 2});
                     }
                 },
                 error: function (result, type) {
                     parent.layer.close(loading);
-                    layer.alert(result.msg, {title: '保存失败', icon: 2});
+                    layer.alert(result.message, {title: '保存失败', icon: 2});
                 }
             });
             return false;

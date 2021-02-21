@@ -36,13 +36,21 @@ public class SysDicSpec {
 
     private static void baseBuild(SysDicQueryBean queryBean, Root<SysDic> root, CriteriaBuilder builder, List<Predicate> predicates) {
 
+        //id
+        {
+            if(queryBean.getId() != null){
+                predicates.add(builder.equal(root.get(SysDicEnums.PropertyJoinEnum.id.name()), queryBean.getId()));
+            }
+            if(queryBean.getIdIsNotIn() != null && queryBean.getIdIsNotIn().length > 0){
+                predicates.add(root.get(SysDicEnums.PropertyJoinEnum.id.name()).in(queryBean.getIdIsNotIn()).not());
+            }
+        }
         //code
         {
             if(StringUtils.isNotBlank(queryBean.getCode())){
                 predicates.add(builder.equal(root.get(SysDicEnums.PropertyEnum.code.name()), queryBean.getCode()));
             }
         }
-
         //pid
         {
             if(queryBean.getPid() != null){

@@ -3,9 +3,6 @@ package com.sly.noah.core.modules.rbac.service;
 import com.sly.noah.core.modules.rbac.jpa.entity.RbacTeam;
 import com.sly.noah.core.modules.rbac.query_bean.RbacTeamQueryBean;
 import com.sly.noah.core.modules.rbac.vo.RbacTeamVO;
-import com.sly.noah.core.modules.sys.jpa.entity.SysDic;
-import com.sly.noah.core.modules.sys.query_bean.SysDicQueryBean;
-import com.sly.noah.core.modules.sys.vo.SysDicVO;
 
 import java.util.List;
 
@@ -27,10 +24,14 @@ public interface RbacTeamService {
 
     List<RbacTeamVO> convertEntityToVO(List<RbacTeam> rbacTeams);
 
-    SysDic convertVOToEntity(RbacTeamVO rbacTeamVO);
+    RbacTeam convertVOToEntity(RbacTeamVO rbacTeamVO);
 
     void delete(Integer id);
 
+    /**
+     * 递归删除
+     * @param id
+     */
     void deleteWithAllSubById(Integer id);
 
 }

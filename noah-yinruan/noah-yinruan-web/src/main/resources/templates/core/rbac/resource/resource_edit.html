@@ -80,7 +80,7 @@
                 data: data.field,
                 dataType: 'json',
                 success: function (result) {
-                    if(result.code == 200){
+                    if(result.success){
                         let index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                         parent.layer.close(loading);
@@ -89,12 +89,12 @@
                         parent.location.href = url;
                     }else{
                         parent.layer.close(loading);
-                        layer.alert(result.msg, {title: '保存失败', icon: 2});
+                        layer.alert(result.message, {title: '保存失败', icon: 2});
                     }
                 },
                 error: function (result, type) {
                     parent.layer.close(loading);
-                    layer.alert(result.msg, {title: '保存失败', icon: 2});
+                    layer.alert(result.message, {title: '保存失败', icon: 2});
                 }
             });
             return false;

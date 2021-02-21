@@ -2,10 +2,8 @@ package com.sly.noah.core.modules.sys.controller;
 
 import com.sly.noah.core.frontend.model.Result;
 import com.sly.noah.core.modules.sys.jpa.entity.SysDic;
-import com.sly.noah.core.modules.sys.query_bean.SysDicQueryBean;
 import com.sly.noah.core.modules.sys.service.SysDicService;
 import com.sly.noah.core.modules.sys.vo.SysDicVO;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -54,14 +52,8 @@ public class SysDicController {
     public Object add(SysDicVO vo) {
         try {
             //菜单uri唯一性判断
-            if(StringUtils.isNotBlank(vo.getCode())){
-                SysDicQueryBean queryBean = new SysDicQueryBean();
-                queryBean.setCode(vo.getCode());
-                queryBean.setPid(vo.getPid());
-                long count = sysDicService.count(queryBean);
-                if(count > 0){
-                    return Result.failed("编码已存在");
-                }
+            if(sysDicService.isCodeRepeat(null, vo.getPid(), vo.getCode())){
+                return Result.failed("编码已存在");
             }
             SysDic sysDic = sysDicService.convertVOToEntity(vo);
             if(vo.getPid() == null){
@@ -87,7 +79,12 @@ public class SysDicController {
     @ResponseBody
     public Object edit(SysDicVO vo){
         try{
+            //菜单uri唯一性判断
+            if(sysDicService.isCodeRepeat(vo.getId(), vo.getPid(), vo.getCode())){
+                return Result.failed("编码已存在");
+            }
             SysDic sysDic = sysDicService.convertVOToEntity(vo);
+            sysDicService.save(sysDic);
             return Result.success(null, "添加成功！");
         }catch (Exception e){
             e.printStackTrace();
@@ -106,6 +103,7 @@ public class SysDicController {
     public Object delete(Integer id) {
         try {
             sysDicService.deleteWithAllSubById(id);
+            sysDicService.reloadDic();
             return Result.success(null, "删除成功！");
         } catch (Exception e) {
             e.printStackTrace();

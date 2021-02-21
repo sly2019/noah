@@ -9,6 +9,9 @@ import lombok.Data;
 @Data
 public class SysDicQueryBean {
 
+    private Integer id;
+    private Integer[] idIsNotIn;
+
     private String code;
 
     private Integer pid;
